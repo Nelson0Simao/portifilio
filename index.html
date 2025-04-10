@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nelson Simão | Cybersecurity Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-animation {
+            background: linear-gradient(-45deg, #1e3a8a, #4338ca, #6d28d9, #a21caf);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        .skill-bar {
+            transition: width 2s ease-in-out;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Cursor Personalizado -->
+    <div id="custom-cursor" class="fixed w-8 h-8 rounded-full border-2 border-purple-400 pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 mix-blend-difference"></div>
+
+    <!-- Menu Flutuante -->
+    <div class="fixed right-6 top-6 z-50">
+        <div class="flex space-x-4">
+            <a href="#home" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-xl hover:text-purple-400 transition-colors animate__animated animate__fadeInRight animate__delay-1s">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#about" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-xl hover:text-purple-400 transition-colors animate__animated animate__fadeInRight animate__delay-1-2s">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="#experience" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-xl hover:text-purple-400 transition-colors animate__animated animate__fadeInRight animate__delay-1-4s">
+                <i class="fas fa-briefcase"></i>
+            </a>
+            <a href="#contact" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-xl hover:text-purple-400 transition-colors animate__animated animate__fadeInRight animate__delay-1-6s">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Seção Hero -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden gradient-animation">
+        <div class="absolute inset-0 bg-black/30 z-0"></div>
+        <div class="container mx-auto px-6 py-24 z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="lg:w-1/2 animate__animated animate__fadeInLeft">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">Nelson <span class="text-purple-400">Simão</span></h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-purple-200">Cybersecurity Specialist | Web Applications Analyst</h2>
+                    <p class="text-lg mb-8 text-gray-300">Desenvolvedor web astuto com 4+ anos de experiência em cibersegurança e análise de aplicações web.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="px-8 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition-colors text-lg animate__animated animate__pulse animate__infinite">
+                            Contate-me
+                        </a>
+                        <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="px-8 py-3 glass-effect hover:bg-white/20 rounded-lg font-medium transition-colors text-lg flex items-center gap-2">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center animate__animated animate__fadeInRight">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <div class="absolute inset-0 bg-purple-500/20 rounded-full blur-xl"></div>
+                        <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-purple-400/50 float-animation">
+                            <!-- Placeholder for profile image -->
+                            <div class="w-full h-full bg-gray-800 flex items-center justify-center text-6xl">
+                                <i class="fas fa-user-secret text-purple-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="w-10 h-16 rounded-full border-2 border-white/50 flex items-start justify-center p-1">
+                <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Seção Sobre -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center relative">
+                <span class="relative inline-block">
+                    Sobre Mim
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-purple-500 rounded-full"></span>
+                </span>
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2 animate__animated animate__fadeInLeft">
+                    <h3 class="text-2xl font-semibold mb-4">Quem sou eu?</h3>
+                    <p class="text-lg mb-6 text-gray-300">
+                        Sou um especialista em cibersegurança e analista de aplicações web com base em Luanda, Angola. 
+                        Com mais de 4 anos de experiência, trabalhei com equipes internacionais criando designs de interface 
+                        gráfica e implementando estratégias de SEO que aumentaram o tráfego de sites em 30%.
+                    </p>
+                    <p class="text-lg mb-6 text-gray-300">
+                        Minha paixão é implementar as mais recentes tendências de TI e segurança cibernética para criar 
+                        soluções robustas e seguras para os desafios digitais atuais.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mb-2">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4 class="font-semibold mb-1">Cybersecurity</h4>
+                            <p class="text-sm text-gray-400">Especialista em Blue Team</p>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mb-2">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h4 class="font-semibold mb-1">Desenvolvimento Web</h4>
+                            <p class="text-sm text-gray-400">4+ anos de experiência</p>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mb-2">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 class="font-semibold mb-1">SEO</h4>
+                            <p class="text-sm text-gray-400">Aumento de 30% no tráfego</p>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mb-2">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="font-semibold mb-1">Trabalho em Equipe</h4>
+                            <p class="text-sm text-gray-400">Experiência internacional</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 animate__animated animate__fadeInRight">
+                    <h3 class="text-2xl font-semibold mb-6">Minhas Habilidades</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Segurança Cibernética</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="skill-bar bg-purple-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Análise de Aplicações Web</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="skill-bar bg-purple-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Desenvolvimento Front-end</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="skill-bar bg-purple-600 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">SEO</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="skill-bar bg-purple-600 h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Habilidades Analíticas</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="skill-bar bg-purple-600 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 glass-effect p-6 rounded-lg card-hover">
+                        <h4 class="text-xl font-semibold mb-4">Principais Competências</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Habilidades Analíticas</span>
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Monitoramento de Segurança</span>
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Pentesting</span>
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Blue Team</span>
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Web Development</span>
+                            <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Experiência -->
+    <section id="experience" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center relative">
+                <span class="relative inline-block">
+                    Experiência Profissional
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-purple-500 rounded-full"></span>
+                </span>
+            </h2>
+            
+            <div class="relative">
+                <!-- Linha do tempo -->
+                <div class="hidden lg:block absolute left-1/2 top-0 h-full w-1 bg-purple-500/30 transform -translate-x-1/2"></div>
+                
+                <!-- Item 1 -->
+                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative animate__animated animate__fadeInUp">
+                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-1">
+                        <h3 class="text-2xl font-semibold text-purple-400">Zonic Digital</h3>
+                        <p class="text-lg text-gray-400">Blue Team</p>
+                        <p class="text-sm text-gray-500">janeiro de 2020 - Present (5 anos 4 meses)</p>
+                        <p class="text-gray-300 mt-2">Luanda, Luanda, Angola</p>
+                    </div>
+                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
+                        <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-2xl border-4 border-gray-900 z-10">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-3">
+                        <div class="glass-effect p-6 rounded-lg card-hover">
+                            <p class="text-gray-300">
+                                Trabalhei como parte do Blue Team, responsável por monitorar e defender sistemas contra ameaças cibernéticas.
+                                Implementei soluções de segurança que reduziram incidentes em 40%.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-3">
+                        <h3 class="text-2xl font-semibold text-purple-400">CreateOfSoft</h3>
+                        <p class="text-lg text-gray-400">Analista de Segurança</p>
+                        <p class="text-sm text-gray-500">julho de 2019 - Present (5 anos 10 meses)</p>
+                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
+                    </div>
+                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
+                        <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-2xl border-4 border-gray-900 z-10">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-1">
+                        <div class="glass-effect p-6 rounded-lg card-hover">
+                            <p class="text-gray-300">
+                                Como Analista de Segurança, realizei auditorias em sistemas, identifiquei vulnerabilidades e recomendei correções.
+                                Desenvolvi políticas de segurança que melhoraram a postura de segurança da organização.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-1">
+                        <h3 class="text-2xl font-semibold text-purple-400">CreateOfSoft</h3>
+                        <p class="text-lg text-gray-400">Desenvolvedor Web</p>
+                        <p class="text-sm text-gray-500">janeiro de 2023 - maio de 2024 (1 ano 5 meses)</p>
+                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
+                    </div>
+                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
+                        <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-2xl border-4 border-gray-900 z-10">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    </div>
+                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-3">
+                        <div class="glass-effect p-6 rounded-lg card-hover">
+                            <p class="text-gray-300">
+                                Desenvolvi interfaces gráficas para web e apliquei estratégias de SEO que resultaram em aumento de 30% no tráfego dos sites.
+                                Trabalhei com equipes internacionais em projetos complexos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="flex flex-col lg:flex-row items-center lg:items-start justify-between relative animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-3">
+                        <h3 class="text-2xl font-semibold text-purple-400">Especialista em Cibersegurança</h3>
+                        <p class="text-lg text-gray-400">Consultor Independente</p>
+                        <p class="text-sm text-gray-500">maio de 2024 - maio de 2024 (1 mês)</p>
+                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
+                    </div>
+                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
+                        <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-2xl border-4 border-gray-900 z-10">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                    </div>
+                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-1">
+                        <div class="glass-effect p-6 rounded-lg card-hover">
+                            <p class="text-gray-300">
+                                Prestei consultoria especializada em cibersegurança para clientes diversos, ajudando a fortalecer suas defesas contra ameaças digitais.
+                                Realizei pentests e avaliações de vulnerabilidade.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Educação -->
+    <section class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center relative">
+                <span class="relative inline-block">
+                    Formação Acadêmica
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-purple-500 rounded-full"></span>
+                </span>
+            </h2>
+            
+            <div class="max-w-3xl mx-auto glass-effect p-8 rounded-lg card-hover animate__animated animate__fadeIn">
+                <div class="flex items-start">
+                    <div class="mr-6 text-purple-400 text-4xl">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2">Instituto Superior Politécnico Internacional</h3>
+                        <p class="text-gray-400 mb-4">Graduação em Tecnologia da Informação</p>
+                        <p class="text-gray-300">
+                            Educação formal em TI com foco em segurança da informação e desenvolvimento de sistemas.
+                            Adquiri conhecimentos teóricos e práticos que fundamentam minha carreira em cibersegurança.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contact" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center relative">
+                <span class="relative inline-block">
+                    Contato
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-purple-500 rounded-full"></span>
+                </span>
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2 animate__animated animate__fadeInLeft">
+                    <h3 class="text-2xl font-semibold mb-6">Vamos conversar!</h3>
+                    <p class="text-lg mb-8 text-gray-300">
+                        Estou sempre aberto a novas oportunidades e colaborações. Se você tem um projeto interessante ou quer discutir sobre cibersegurança, sinta-se à vontade para entrar em contato.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Email</h4>
+                                <a href="mailto:nelsonsimao100@gmail.com" class="text-gray-400 hover:text-purple-400 transition-colors">nelsonsimao100@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mr-4">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">linkedin.com/in/nelson-simão</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center glass-effect p-4 rounded-lg card-hover">
+                            <div class="text-purple-400 text-2xl mr-4">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Portfólio</h4>
+                                <a href="https://63b73fbbdfe0bf173f70d967--papaya-peony-dab15d.netlify.app/" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">Meu Portfólio Online</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 animate__animated animate__fadeInRight">
+                    <form class="glass-effect p-8 rounded-lg card-hover">
+                        <h3 class="text-2xl font-semibold mb-6">Envie uma mensagem</h3>
+                        
+                        <div class="mb-6">
+                            <label for="name" class="block mb-2 text-gray-300">Seu Nome</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Digite seu nome">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 text-gray-300">Seu Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Digite seu email">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block mb-2 text-gray-300">Assunto</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Qual o assunto?">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 text-gray-300">Mensagem</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Digite sua mensagem"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-800 text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors text-xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:nelsonsimao100@gmail.com" class="text-gray-400 hover:text-purple-400 transition-colors text-xl">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://63b73fbbdfe0bf173f70d967--papaya-peony-dab15d.netlify.app/" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors text-xl">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+            <p class="text-gray-400">&copy; 2024 Nelson Simão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cursor personalizado
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Efeito de hover nos links
+        document.querySelectorAll('a, button').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('scale-150', 'bg-purple-400/30');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('scale-150', 'bg-purple-400/30');
+            });
+        });
+        
+        // Animação das barras de habilidades quando visíveis
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.animate__fadeInUp, .animate__fadeInLeft, .animate__fadeInRight').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Form submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+            form.reset();
+        });
+    </script>
+</body>
+</html>
