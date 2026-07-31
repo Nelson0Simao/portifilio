@@ -1,429 +1,422 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
-    <!-- Meta tags essenciais -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nelson Simão | Especialista em Cibersegurança</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Estilos personalizados -->
-    <style>
-        /* Underline para títulos de seção */
-        .section-title {
-            position: relative;
-            display: inline-block;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 60px;
-            height: 4px;
-            background-color: #3b82f6; /* Azul corporativo */
-            border-radius: 2px;
-        }
-        /* Linha central da timeline (para desktop) */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background-color: #374151;
-            transform: translateX(-50%);
-        }
-        @media (max-width: 1024px) {
-            .timeline::before {
-                left: 32px;
-            }
-        }
-        /* Animação sutil para barras de skills */
-        .skill-bar {
-            transition: width 1s ease-in-out;
-        }
-        /* Hover em cards */
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nelson Simão — Dossiê de Cibersegurança</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --ink:#0b0e14;
+    --ink-2:#121826;
+    --ink-3:#1a2236;
+    --fog:#7d879c;
+    --parchment:#e9e3d0;
+    --parchment-dim:#c9c3ac;
+    --gold:#b9962f;
+    --gold-bright:#d9b654;
+    --crimson:#7a2230;
+    --crimson-bright:#a13246;
+    --line: rgba(185,150,47,0.22);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--parchment);
+    font-family:'EB Garamond', serif;
+    font-size:19px;
+    line-height:1.7;
+  }
+  ::selection{ background:var(--gold); color:#14161c; }
+
+  h1,h2,h3,.display{
+    font-family:'Cinzel', serif;
+    letter-spacing:0.03em;
+    font-weight:600;
+    color:var(--parchment);
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  a{ color:inherit; }
+
+  /* Fog / vignette background layer */
+  .fog-layer{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 0%, rgba(122,34,48,0.16), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 85% 10%, rgba(185,150,47,0.10), transparent 60%),
+      radial-gradient(ellipse 100% 60% at 50% 100%, rgba(20,26,40,0.9), transparent 70%),
+      var(--ink);
+  }
+  .noise{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{ position:relative; z-index:2; }
+
+  /* Seal / eyebrow */
+  .seal{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-bright);
+  }
+  .seal::before{
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:var(--crimson-bright); box-shadow:0 0 8px var(--crimson-bright);
+  }
+
+  /* Nav */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(11,14,20,0.82); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1180px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ font-family:'Cinzel',serif; font-weight:700; font-size:16px; letter-spacing:0.12em; }
+  .brand .dot{ color:var(--crimson-bright); }
+  .navlinks{ display:flex; gap:28px; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; }
+  .navlinks a{ text-decoration:none; color:var(--fog); position:relative; padding-bottom:4px; transition:color .25s; }
+  .navlinks a:hover{ color:var(--gold-bright); }
+  .navlinks a:focus-visible{ outline:1px solid var(--gold-bright); outline-offset:4px; }
+  @media (max-width:860px){ .navlinks{display:none;} }
+
+  section{ position:relative; padding:120px 28px; max-width:1180px; margin:0 auto; }
+  .divider{
+    height:1px; max-width:1180px; margin:0 auto;
+    background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+  }
+
+  /* HERO */
+  .hero{ min-height:100vh; display:flex; align-items:center; padding-top:140px; }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:70px; align-items:center; width:100%; }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .hero-title{ font-size:clamp(38px,5.4vw,68px); line-height:1.04; margin:18px 0 22px; }
+  .hero-title .accent{ color:var(--gold-bright); font-style:italic; font-family:'EB Garamond',serif; font-weight:400; }
+  .hero-sub{ font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--fog); letter-spacing:0.02em; margin-bottom:34px; max-width:520px; }
+
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
+    padding:14px 26px; border-radius:2px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+    transition:transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-primary{ background:var(--gold); color:#161311; font-weight:700; }
+  .btn-primary:hover{ background:var(--gold-bright); box-shadow:0 0 24px rgba(185,150,47,0.35); transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--parchment); }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); transform:translateY(-2px); }
+  .btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
+
+  /* Compass / seal illustration */
+  .medallion{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
+  .medallion svg{ width:100%; height:100%; }
+  .m-ring{ animation: spin 60s linear infinite; transform-origin:200px 200px; }
+  .m-ring-rev{ animation: spin 46s linear infinite reverse; transform-origin:200px 200px; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .m-ring, .m-ring-rev{ animation:none; } }
+
+  /* Eyebrow + section title pattern */
+  .sec-head{ margin-bottom:56px; }
+  .sec-num{ font-family:'JetBrains Mono',monospace; color:var(--crimson-bright); font-size:13px; letter-spacing:0.16em; }
+  .sec-title{ font-size:clamp(28px,3.4vw,42px); margin-top:10px; }
+
+  /* About */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+  .drop{ font-size:64px; float:left; line-height:0.8; padding:8px 10px 0 0; font-family:'Cinzel',serif; color:var(--gold-bright); }
+
+  .dial-row{ display:flex; flex-direction:column; gap:26px; margin-top:8px; }
+  .dial{ display:grid; grid-template-columns:1fr auto; gap:6px 14px; align-items:baseline; }
+  .dial-label{ font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.04em; color:var(--parchment-dim); }
+  .dial-seq{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-bright); }
+  .dial-track{ grid-column:1/-1; height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
+  .dial-fill{ height:100%; background:linear-gradient(90deg, var(--crimson), var(--gold)); width:0; transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
+
+  /* Case files (experience) */
+  .case{
+    border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    padding:30px 32px; border-radius:3px; position:relative; margin-bottom:22px;
+  }
+  .case::before{
+    content:attr(data-file); position:absolute; top:-11px; left:26px; background:var(--ink);
+    padding:0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--gold-bright);
+  }
+  .case-head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
+  .case-role{ font-family:'Cinzel',serif; font-size:20px; color:var(--parchment); }
+  .case-org{ color:var(--gold-bright); font-style:italic; }
+  .case-time{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--fog); white-space:nowrap; }
+  .case-body{ color:var(--parchment-dim); }
+  .case-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; border:1px solid var(--line); color:var(--fog); padding:4px 10px; border-radius:20px; }
+
+  /* Projects */
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:900px){ .cards{ grid-template-columns:1fr; } }
+  .pcard{ border:1px solid var(--line); padding:28px; background:var(--ink-2); position:relative; overflow:hidden; transition:border-color .25s, transform .25s; }
+  .pcard:hover{ border-color:var(--gold); transform:translateY(-4px); }
+  .pcard i{ color:var(--crimson-bright); font-size:22px; margin-bottom:16px; display:block; }
+  .pcard h3{ font-size:17px; margin:0 0 10px; }
+  .pcard p{ color:var(--parchment-dim); font-size:16px; margin:0; }
+
+  /* Certifications */
+  .certs{ display:flex; flex-direction:column; }
+  .cert{ display:flex; gap:20px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--line); }
+  .cert:last-child{ border-bottom:none; }
+  .cert .idx{ font-family:'JetBrains Mono',monospace; color:var(--gold-bright); font-size:13px; padding-top:4px; }
+  .cert h3{ font-size:18px; margin:0 0 6px; }
+  .cert p{ margin:0; color:var(--parchment-dim); }
+
+  /* Contact */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; } }
+  .clink{ display:flex; align-items:center; gap:14px; padding:16px 0; border-bottom:1px solid var(--line); text-decoration:none; }
+  .clink i{ color:var(--gold-bright); width:20px; }
+  .clink span{ color:var(--parchment-dim); }
+  .clink:hover span{ color:var(--parchment); }
+
+  footer{ text-align:center; padding:40px 28px; color:var(--fog); font-family:'JetBrains Mono',monospace; font-size:12px; border-top:1px solid var(--line); }
+</style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans leading-relaxed antialiased">
-    <!-- Navbar fixa -->
-    <header class="fixed top-0 left-0 right-0 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800 z-50">
-        <div class="container mx-auto px-6 py-4">
-            <nav class="flex flex-wrap justify-center gap-8 text-sm md:text-base">
-                <a href="#home" class="hover:text-blue-500 transition-colors">Início</a>
-                <a href="#about" class="hover:text-blue-500 transition-colors">Sobre</a>
-                <a href="#experience" class="hover:text-blue-500 transition-colors">Experiência</a>
-                <a href="#projects" class="hover:text-blue-500 transition-colors">Projetos</a>
-                <a href="#certifications" class="hover:text-blue-500 transition-colors">Certificações</a>
-                <a href="#education" class="hover:text-blue-500 transition-colors">Formação</a>
-                <a href="#contact" class="hover:text-blue-500 transition-colors">Contato</a>
-            </nav>
+<body>
+
+<div class="fog-layer"></div>
+<div class="noise"></div>
+
+<header>
+  <nav>
+    <div class="brand">N<span class="dot">·</span>SIMÃO</div>
+    <div class="navlinks">
+      <a href="#sobre">Dossiê</a>
+      <a href="#experiencia">Registos</a>
+      <a href="#projetos">Casos</a>
+      <a href="#certificacoes">Grimório</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn btn-ghost" style="padding:10px 18px;">Contratar</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="topo">
+    <div class="hero-grid">
+      <div>
+        <div class="seal">Dossiê Nº 0447 · Sequência activa</div>
+        <h1 class="hero-title">Nelson Simão<br><span class="accent">caçador de anomalias digitais.</span></h1>
+        <p class="hero-sub">Analista de Cibersegurança sediado em Luanda, Angola. Vigio sistemas, sigo o rasto de vulnerabilidades e devolvo ordem ao caos — Blue Team por vocação, Bug Hunter por instinto.</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="#contacto" class="btn btn-primary"><i class="fa-solid fa-feather-pointed"></i> Abrir correspondência</a>
+          <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
         </div>
-    </header>
+      </div>
+      <div class="medallion" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(185,150,47,0.18)" stroke-width="1"/>
+          <g class="m-ring">
+            <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(185,150,47,0.35)" stroke-width="1" stroke-dasharray="2 8"/>
+            <g fill="var(--gold-bright)">
+              <circle cx="200" cy="40" r="2.4"/><circle cx="200" cy="360" r="2.4"/>
+              <circle cx="40" cy="200" r="2.4"/><circle cx="360" cy="200" r="2.4"/>
+            </g>
+          </g>
+          <g class="m-ring-rev">
+            <circle cx="200" cy="200" r="118" fill="none" stroke="rgba(122,34,48,0.5)" stroke-width="1"/>
+            <path d="M200 82 L212 200 L200 318 L188 200 Z" fill="none" stroke="rgba(122,34,48,0.55)" stroke-width="1"/>
+          </g>
+          <circle cx="200" cy="200" r="70" fill="none" stroke="var(--gold-bright)" stroke-width="1.4"/>
+          <text x="200" y="192" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="#e9e3d0" letter-spacing="2">BLUE</text>
+          <text x="200" y="216" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="#b9962f" letter-spacing="2">TEAM</text>
+          <line x1="200" y1="150" x2="200" y2="200" stroke="#e9e3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="200" y1="200" x2="238" y2="200" stroke="#a13246" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
 
-    <!-- Seção Hero -->
-    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-950 pt-20">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1">
-                    <h1 class="text-5xl md:text-6xl font-bold mb-4">
-                        Nelson <span class="text-blue-500">Simão</span>
-                    </h1>
-                    <h2 class="text-2xl md:text-3xl text-gray-300 mb-6">
-                        Especialista em Cibersegurança & Analista de Aplicações Web
-                    </h2>
-                    <p class="text-lg text-gray-400 mb-8 max-w-lg">
-                        Profissional angolano com experiência consolidada em cibersegurança ofensiva, testes de penetração e desenvolvimento web seguro, baseado em Luanda, Angola.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#contact" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                            Entrar em Contato
-                        </a>
-                        <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="px-8 py-3 border border-gray-600 hover:border-blue-500 hover:text-blue-400 font-medium rounded-lg transition-colors flex items-center gap-2">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                    </div>
-                </div>
-                <div class="order-1 md:order-2 flex justify-center">
-                    <div class="w-80 h-80 rounded-full overflow-hidden border-8 border-gray-800 shadow-2xl bg-gray-800 flex items-center justify-center">
-                        <!-- Substitua por sua foto profissional (adicione alt text para acessibilidade) -->
-                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQH2g3jBE6wMow/profile-displayphoto-shrink_200_200/B4DZdhAGrSHkAY-/0/1749679108837?e=1767225600&v=beta&t=ODnkHKHhYCV1jGcd_pSI67t4FEU_xzULQSDybYmNVkg" alt="Foto de perfil de Nelson Simão" class="w-full h-full object-cover">
-                    </div>
-                </div>
-            </div>
+  <div class="divider"></div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sec-head">
+      <div class="sec-num">FICHEIRO · 01</div>
+      <h2 class="sec-title">O Observador</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p><span class="drop">S</span>ou um profissional de TI com experiência prática em análise de vulnerabilidades e segurança da informação no mercado angolano. Identifiquei e reportei, de forma ética, falhas críticas em aplicações web e infra-estrutura para empresas como ZAP, Multitel e SmartOptions, e colaborei com a APD na investigação de um vazamento de dados.</p>
+        <p style="color:var(--parchment-dim);">Do lado defensivo, actuo como Blue Team Analyst: monitorizo alertas em SIEM (Wazuh), analiso registos, respondo a incidentes e reforço servidores Windows/Linux. Do lado ofensivo, participei em programas internacionais de Bug Bounty (HackerOne), caçando falhas de controlo de acesso, injecção e configuração insegura de APIs. A minha base em desenvolvimento web dá-me visão do ciclo de vida completo das aplicações — e dos riscos que ele esconde.</p>
+      </div>
+      <div>
+        <div class="dial-row">
+          <div class="dial">
+            <span class="dial-label">Segurança Ofensiva &amp; Pentest</span><span class="dial-seq">SEQ. 3</span>
+            <div class="dial-track"><div class="dial-fill" data-w="92%"></div></div>
+          </div>
+          <div class="dial">
+            <span class="dial-label">Monitorização &amp; SIEM (Wazuh)</span><span class="dial-seq">SEQ. 3</span>
+            <div class="dial-track"><div class="dial-fill" data-w="88%"></div></div>
+          </div>
+          <div class="dial">
+            <span class="dial-label">Resposta a Incidentes</span><span class="dial-seq">SEQ. 4</span>
+            <div class="dial-track"><div class="dial-fill" data-w="82%"></div></div>
+          </div>
+          <div class="dial">
+            <span class="dial-label">Hardening de Servidores</span><span class="dial-seq">SEQ. 4</span>
+            <div class="dial-track"><div class="dial-fill" data-w="85%"></div></div>
+          </div>
+          <div class="dial">
+            <span class="dial-label">Desenvolvimento Web Seguro</span><span class="dial-seq">SEQ. 5</span>
+            <div class="dial-track"><div class="dial-fill" data-w="75%"></div></div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Seção Sobre Mim -->
-    <section id="about" class="py-24 bg-gray-900">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Sobre Mim</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-6">Quem sou eu</h3>
-                    <p class="text-gray-300 mb-6">
-                        Sou um profissional de TI com experiência consolidada em cibersegurança ofensiva e testes de penetração, com atuação em diagnóstico e mitigação de vulnerabilidades em empresas como Multitel, SmartOptions, ZAP e colaboração com APD Angola, além de prestar consultoria freelancer para startups emergentes do setor tecnológico.
-                    </p>
-                    <p class="text-gray-300 mb-6">
-                        Nos últimos anos, venho me especializando em análise de vulnerabilidades, hardening de sistemas e exploração de falhas web, aplicando metodologias ofensivas para detectar brechas críticas, validar controles de segurança e fortalecer a resiliência digital das organizações.
-                    </p>
-                    <p class="text-gray-300">
-                        Minha base em desenvolvimento web me proporciona uma visão técnica completa do ciclo de vida das aplicações, permitindo antecipar vulnerabilidades desde a camada de código até a infraestrutura. Essa combinação entre desenvolvimento e segurança me permite atuar com precisão tanto na identificação de falhas quanto na proposição de soluções eficazes. Atualmente, concentro meus esforços em cibersegurança ofensiva, resposta a incidentes e melhoria contínua de processos de segurança, buscando contribuir para um ecossistema digital mais seguro e maduro em escala global.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-semibold mb-6">Principais Competências</h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                            <i class="fas fa-shield-alt text-blue-500 text-3xl mb-4"></i>
-                            <h4 class="font-semibold mb-2">Cibersegurança</h4>
-                            <p class="text-sm text-gray-400">Ofensiva e defensiva</p>
-                        </div>
-                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                            <i class="fas fa-brain text-blue-500 text-3xl mb-4"></i>
-                            <h4 class="font-semibold mb-2">Habilidades Analíticas</h4>
-                            <p class="text-sm text-gray-400">Análise de vulnerabilidades</p>
-                        </div>
-                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                            <i class="fas fa-bug text-blue-500 text-3xl mb-4"></i>
-                            <h4 class="font-semibold mb-2">Caça a Ameaças</h4>
-                            <p class="text-sm text-gray-400">Threat Hunting</p>
-                        </div>
-                        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                            <i class="fas fa-code text-blue-500 text-3xl mb-4"></i>
-                            <h4 class="font-semibold mb-2">Desenvolvimento Web</h4>
-                            <p class="text-sm text-gray-400">Aplicações seguras</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Barras de habilidades -->
-            <div class="mt-16">
-                <h3 class="text-2xl font-semibold mb-8">Nível de Proficiência</h3>
-                <div class="space-y-6 max-w-3xl">
-                    <div>
-                        <div class="flex justify-between mb-2"><span>Segurança Cibernética</span><span class="text-blue-400">90%</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%" data-width="90%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2"><span>Análise de Aplicações Web</span><span class="text-blue-400">85%</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%" data-width="85%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2"><span>Desenvolvimento Front-end</span><span class="text-blue-400">80%</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%" data-width="80%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2"><span>Caça a Ameaças</span><span class="text-blue-400">85%</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%" data-width="85%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2"><span>Habilidades Analíticas</span><span class="text-blue-400">95%</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%" data-width="95%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="divider"></div>
+
+  <!-- EXPERIÊNCIA -->
+  <section id="experiencia">
+    <div class="sec-head">
+      <div class="sec-num">FICHEIRO · 02</div>
+      <h2 class="sec-title">Registos de Campo</h2>
+    </div>
+
+    <div class="case" data-file="CASO / ACTIVO">
+      <div class="case-head">
+        <div><span class="case-role">Blue Team Analyst</span> · <span class="case-org">Zonic Digital</span></div>
+        <div class="case-time">Abr 2024 — Presente · Luanda</div>
+      </div>
+      <p class="case-body">Monitorização de alertas em SIEM (Wazuh), análise de registos e resposta inicial a incidentes. Identificação de padrões de ataque e documentação de manuais de resposta (playbooks).</p>
+      <div class="case-tags"><span class="tag">Wazuh</span><span class="tag">SIEM</span><span class="tag">Threat Hunting</span></div>
+    </div>
+
+    <div class="case" data-file="CASO / ENCERRADO">
+      <div class="case-head">
+        <div><span class="case-role">Especialista em Cibersegurança</span> · <span class="case-org">Create of Soft</span></div>
+        <div class="case-time">Maio 2023 — Maio 2025 · Luanda</div>
+      </div>
+      <p class="case-body">Colaboração em controlos de acesso e hardening de endpoints. Elaboração de relatórios técnicos com planos de mitigação para as equipas de desenvolvimento.</p>
+      <div class="case-tags"><span class="tag">Hardening</span><span class="tag">Windows/Linux</span></div>
+    </div>
+
+    <div class="case" data-file="CASO / ENCERRADO">
+      <div class="case-head">
+        <div><span class="case-role">Analista de Cibersegurança · Bug Bounty</span> · <span class="case-org">HackerOne</span></div>
+        <div class="case-time">Fev 2023 — Out 2024</div>
+      </div>
+      <p class="case-body">Reporte ético de vulnerabilidades em programas internacionais com validação de correcções. Foco em falhas de controlo de acesso, injecção de código e configuração insegura de APIs.</p>
+      <div class="case-tags"><span class="tag">IDOR</span><span class="tag">XSS</span><span class="tag">Bug Bounty</span></div>
+    </div>
+
+    <div class="case" data-file="CASO / ENCERRADO">
+      <div class="case-head">
+        <div><span class="case-role">Desenvolvedor Web</span> · <span class="case-org">Create of Soft</span></div>
+        <div class="case-time">Jan 2023 — Maio 2024 · Luanda</div>
+      </div>
+      <p class="case-body">Construção e manutenção de sistemas internos com foco em segurança por concepção (security by design). Sanitização de dados de entrada e prevenção contra SQLi, XSS e CSRF.</p>
+      <div class="case-tags"><span class="tag">OWASP Top 10</span><span class="tag">Segurança por Design</span></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <div class="sec-head">
+      <div class="sec-num">FICHEIRO · 03</div>
+      <h2 class="sec-title">Casos Notáveis</h2>
+    </div>
+    <div class="cards">
+      <div class="pcard">
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        <h3>Investigação de Vazamento — APD</h3>
+        <p>Investigação independente de vazamento de dados em parceria com a Associação para a Protecção de Dados, com foco na origem e no impacto da exposição.</p>
+      </div>
+      <div class="pcard">
+        <i class="fa-solid fa-bug"></i>
+        <h3>Reportes Éticos — ZAP, Multitel, SmartOptions</h3>
+        <p>Identificação e divulgação responsável de falhas críticas em aplicações web e infra-estrutura de empresas angolanas.</p>
+      </div>
+      <div class="pcard">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h3>Validações em Programas Internacionais</h3>
+        <p>Participação em programas de Bug Bounty via HackerOne, com falhas validadas e correcções acompanhadas até ao fecho.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CERTIFICAÇÕES -->
+  <section id="certificacoes">
+    <div class="sec-head">
+      <div class="sec-num">FICHEIRO · 04</div>
+      <h2 class="sec-title">O Grimório</h2>
+    </div>
+    <div class="certs">
+      <div class="cert"><span class="idx">I.</span><div><h3>Wazuh for Security Engineers</h3><p>SIEM, XDR e Threat Hunting.</p></div></div>
+      <div class="cert"><span class="idx">II.</span><div><h3>Introdução à Análise de Vulnerabilidades</h3><p>Metodologias de segurança e exploração web.</p></div></div>
+      <div class="cert"><span class="idx">III.</span><div><h3>Cisco CCENT</h3><p>Fundamentos de redes e conectividade.</p></div></div>
+      <div class="cert"><span class="idx">IV.</span><div><h3>Pentest 2.0 / SOC Analyst</h3><p>Formação complementar contínua em testes de intrusão e operações de SOC.</p></div></div>
+    </div>
+
+    <div style="margin-top:56px;">
+      <div class="sec-num">FICHEIRO · 05</div>
+      <h2 class="sec-title" style="margin-bottom:18px;">Formação</h2>
+      <div class="case" data-file="EM CURSO">
+        <div class="case-head">
+          <div><span class="case-role">Engenharia Informática</span> · <span class="case-org">Instituto Superior Politécnico Internacional</span></div>
+          <div class="case-time">Prefinalista</div>
         </div>
-    </section>
+        <p class="case-body">Ênfase em redes de computadores, segurança da informação e desenvolvimento de software.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Seção Experiência Profissional -->
-    <section id="experience" class="py-24 bg-gray-950">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Experiência Profissional</h2>
-            <div class="relative timeline">
-                <!-- Item 1: Zonic Digital -->
-                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative">
-                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-1">
-                        <h3 class="text-2xl font-semibold text-blue-400">Zonic Digital</h3>
-                        <p class="text-lg text-gray-400">Blue Team</p>
-                        <p class="text-sm text-gray-500">janeiro de 2020 - Present (5 anos 11 meses)</p>
-                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
-                    </div>
-                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
-                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl border-4 border-gray-950 z-10">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                    </div>
-                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-3">
-                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all">
-                            <p class="text-gray-300">
-                                Trabalhei como parte do Blue Team, responsável por monitorar e defender sistemas contra ameaças cibernéticas. Implementei soluções de segurança que reduziram incidentes em 40%.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+  <div class="divider"></div>
 
-                <!-- Item 2: CreateOfSoft - Analista de Segurança -->
-                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative">
-                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-3">
-                        <h3 class="text-2xl font-semibold text-blue-400">CreateOfSoft</h3>
-                        <p class="text-lg text-gray-400">Analista de Segurança</p>
-                        <p class="text-sm text-gray-500">julho de 2019 - Present (6 anos 5 meses)</p>
-                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
-                    </div>
-                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
-                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl border-4 border-gray-950 z-10">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-1">
-                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all">
-                            <p class="text-gray-300">
-                                Como Analista de Segurança, realizei auditorias em sistemas, identifiquei vulnerabilidades e recomendei correções. Desenvolvi políticas de segurança que melhoraram a postura de segurança da organização.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="sec-head">
+      <div class="sec-num">FICHEIRO · 06</div>
+      <h2 class="sec-title">Abrir Correspondência</h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p style="color:var(--parchment-dim); max-width:420px;">Disponível para oportunidades, consultorias ou colaborações em cibersegurança — protecção de dados, monitorização e resposta a incidentes.</p>
+      </div>
+      <div>
+        <a class="clink" href="mailto:nelsonsimao200@gmail.com"><i class="fa-solid fa-envelope"></i><span>nelsonsimao200@gmail.com</span></a>
+        <a class="clink" href="tel:+244928348146"><i class="fa-solid fa-phone"></i><span>+244 928 348 146</span></a>
+        <a class="clink" href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank"><i class="fa-brands fa-linkedin"></i><span>linkedin.com/in/nelson-simao-711a27231</span></a>
+        <a class="clink" href="#topo"><i class="fa-solid fa-location-dot"></i><span>Luanda, Angola</span></a>
+      </div>
+    </div>
+  </section>
 
-                <!-- Item 3: CreateOfSoft - Especialista em Cibersegurança -->
-                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative">
-                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-1">
-                        <h3 class="text-2xl font-semibold text-blue-400">CreateOfSoft</h3>
-                        <p class="text-lg text-gray-400">Especialista em Cibersegurança</p>
-                        <p class="text-sm text-gray-500">maio de 2024 - maio de 2024 (1 mês)</p>
-                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
-                    </div>
-                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
-                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl border-4 border-gray-950 z-10">
-                            <i class="fas fa-user-shield"></i>
-                        </div>
-                    </div>
-                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-3">
-                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all">
-                            <p class="text-gray-300">
-                                Prestei consultoria especializada em cibersegurança para clientes diversos, ajudando a fortalecer suas defesas contra ameaças digitais. Realizei pentests e avaliações de vulnerabilidade.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+  <footer>DOSSIÊ ENCERRADO · N. SIMÃO © 2026 · TODOS OS DIREITOS RESERVADOS</footer>
+</div>
 
-                <!-- Item 4: Multitel -->
-                <div class="mb-12 flex flex-col lg:flex-row items-center lg:items-start justify-between relative">
-                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-3">
-                        <h3 class="text-2xl font-semibold text-blue-400">Multitel</h3>
-                        <p class="text-lg text-gray-400">Analista de Cibersegurança</p>
-                        <p class="text-sm text-gray-500">fevereiro de 2023 - outubro de 2024 (1 ano 8 meses)</p>
-                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
-                    </div>
-                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
-                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl border-4 border-gray-950 z-10">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                    </div>
-                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-1">
-                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all">
-                            <p class="text-gray-300">
-                                Atuei no diagnóstico e mitigação de vulnerabilidades, com foco em hardening de sistemas e exploração de falhas web.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.dial-fill').forEach(f=>{ f.style.width = f.dataset.w; });
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.3});
+  document.querySelectorAll('#sobre').forEach(el=>io.observe(el));
+</script>
 
-                <!-- Item 5: CreateOfSoft - Desenvolvedor Web -->
-                <div class="flex flex-col lg:flex-row items-center lg:items-start justify-between relative">
-                    <div class="lg:w-5/12 lg:pr-12 lg:text-right mb-6 lg:mb-0 order-1 lg:order-1">
-                        <h3 class="text-2xl font-semibold text-blue-400">CreateOfSoft</h3>
-                        <p class="text-lg text-gray-400">Desenvolvedor Web</p>
-                        <p class="text-sm text-gray-500">janeiro de 2023 - maio de 2024 (1 ano 4 meses)</p>
-                        <p class="text-gray-300 mt-2">Luanda, Angola</p>
-                    </div>
-                    <div class="lg:w-2/12 flex justify-center order-2 lg:order-2">
-                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl border-4 border-gray-950 z-10">
-                            <i class="fas fa-code"></i>
-                        </div>
-                    </div>
-                    <div class="lg:w-5/12 lg:pl-12 order-3 lg:order-3">
-                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all">
-                            <p class="text-gray-300">
-                                Desenvolvi interfaces gráficas para web e apliquei estratégias de SEO que resultaram em aumento de 30% no tráfego dos sites. Trabalhei com equipes internacionais em projetos complexos.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Projetos (nova melhoria) -->
-    <section id="projects" class="py-24 bg-gray-900">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Projetos e Colaborações</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                    <h3 class="text-xl font-semibold mb-4 text-blue-400">Consultoria para Startups</h3>
-                    <p class="text-gray-300">
-                        Prestei consultoria freelancer em cibersegurança para startups emergentes, focando em análise de vulnerabilidades e hardening de sistemas.
-                    </p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                    <h3 class="text-xl font-semibold mb-4 text-blue-400">Colaboração com APD Angola</h3>
-                    <p class="text-gray-300">
-                        Colaborei em projetos de segurança digital, aplicando metodologias ofensivas para detectar brechas críticas.
-                    </p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 card-hover transition-all">
-                    <h3 class="text-xl font-semibold mb-4 text-blue-400">Projetos com ZAP e SmartOptions</h3>
-                    <p class="text-gray-300">
-                        Atuei em diagnóstico e mitigação de vulnerabilidades em ambientes web e infraestrutura.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Certificações -->
-    <section id="certifications" class="py-24 bg-gray-950">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Certificações</h2>
-            <div class="space-y-6">
-                <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all flex items-start gap-4">
-                    <i class="fas fa-certificate text-blue-500 text-3xl"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Cisco Certified Entry Networking Technician</h3>
-                        <p class="text-gray-300">Certificação em fundamentos de redes e TI.</p>
-                    </div>
-                </div>
-                <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all flex items-start gap-4">
-                    <i class="fas fa-certificate text-blue-500 text-3xl"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Introdução ao Pentest na Prática</h3>
-                        <p class="text-gray-300">Introdução prática a testes de penetração.</p>
-                    </div>
-                </div>
-                <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 card-hover transition-all flex items-start gap-4">
-                    <i class="fas fa-certificate text-blue-500 text-3xl"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Pentest 2.0</h3>
-                        <p class="text-gray-300">Avançado em metodologias de pentesting.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Formação Acadêmica -->
-    <section id="education" class="py-24 bg-gray-900">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Formação Acadêmica</h2>
-            <div class="bg-gray-950 p-8 rounded-lg border border-gray-800 card-hover transition-all">
-                <div class="flex items-start gap-4">
-                    <i class="fas fa-graduation-cap text-blue-500 text-3xl"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Graduação em Tecnologia da Informação</h3>
-                        <p class="text-gray-300">Instituto Superior Politécnico Internacional</p>
-                        <p class="text-gray-400 mt-2">Foco em segurança da informação e desenvolvimento de sistemas.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Contato -->
-    <section id="contact" class="py-24 bg-gray-950">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <h2 class="text-4xl font-bold text-center mb-16 section-title mx-auto">Contato</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-6">Vamos Conversar</h3>
-                    <p class="text-gray-300 mb-8">
-                        Estou aberto a novas oportunidades, consultorias ou colaborações em cibersegurança.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-envelope text-blue-500 text-xl"></i>
-                            <a href="mailto:nelsonsimao100@gmail.com" class="text-gray-400 hover:text-blue-400">nelsonsimao100@gmail.com</a>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <i class="fab fa-linkedin text-blue-500 text-xl"></i>
-                            <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="text-gray-400 hover:text-blue-400">linkedin.com/in/nelson-simão</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <form class="bg-gray-900 p-8 rounded-lg border border-gray-800">
-                        <input type="text" placeholder="Seu Nome" class="w-full mb-4 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500">
-                        <input type="email" placeholder="Seu Email" class="w-full mb-4 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500">
-                        <input type="text" placeholder="Assunto" class="w-full mb-4 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500">
-                        <textarea rows="4" placeholder="Mensagem" class="w-full mb-4 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500"></textarea>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg text-white font-medium transition-colors">
-                            Enviar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-8 bg-gray-900 text-center text-gray-400 border-t border-gray-800">
-        <p>&copy; 2025 Nelson Simão. Todos os direitos reservados.</p>
-    </footer>
-
-    <!-- Script para animação das barras de skills -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.skill-bar').forEach(bar => {
-                bar.style.width = bar.dataset.width;
-            });
-        });
-    </script>
 </body>
 </html>
