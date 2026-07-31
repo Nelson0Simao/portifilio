@@ -3,203 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nelson Simão — Dossiê de Cibersegurança</title>
+<title>Nelson Simão — Cybersecurity Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root{
-    --ink:#0b0e14;
-    --ink-2:#121826;
-    --ink-3:#1a2236;
-    --fog:#7d879c;
-    --parchment:#e9e3d0;
-    --parchment-dim:#c9c3ac;
-    --gold:#b9962f;
-    --gold-bright:#d9b654;
-    --crimson:#7a2230;
-    --crimson-bright:#a13246;
-    --line: rgba(185,150,47,0.22);
+    --bg:#05070c;
+    --bg-2:#0a0e18;
+    --panel:#0d1220;
+    --cyan:#2ee6ff;
+    --magenta:#ff3fa4;
+    --violet:#8b5cf6;
+    --lime:#c6ff5e;
+    --text:#e7ecf7;
+    --text-dim:#8b93ab;
+    --line:rgba(46,230,255,0.18);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    margin:0;
-    background:var(--ink);
-    color:var(--parchment);
-    font-family:'EB Garamond', serif;
-    font-size:19px;
-    line-height:1.7;
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Space Grotesk', sans-serif; font-size:17px; line-height:1.7;
+    cursor:none; overflow-x:hidden;
   }
-  ::selection{ background:var(--gold); color:#14161c; }
-
-  h1,h2,h3,.display{
-    font-family:'Cinzel', serif;
-    letter-spacing:0.03em;
-    font-weight:600;
-    color:var(--parchment);
-  }
-  .mono{ font-family:'JetBrains Mono', monospace; }
-
+  @media (max-width:900px), (hover:none){ body{ cursor:auto; } .cursor-dot,.cursor-ring{ display:none !important; } }
+  ::selection{ background:var(--magenta); color:#05070c; }
   a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
 
-  /* Fog / vignette background layer */
-  .fog-layer{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
+  h1,h2,h3{ font-family:'Orbitron', sans-serif; margin:0; letter-spacing:0.01em; }
+  .display{ font-family:'Rajdhani',sans-serif; font-weight:700; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .jp{ font-family:'Rajdhani',sans-serif; letter-spacing:0.3em; color:var(--cyan); opacity:0.55; font-size:12px; }
+
+  .cursor-dot, .cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:999; border-radius:50%; transform:translate(-50%,-50%); }
+  .cursor-dot{ width:5px; height:5px; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
+  .cursor-ring{ width:30px; height:30px; border:1px solid rgba(46,230,255,0.5); transition:width .25s, height .25s, border-color .25s, background .25s; }
+  .cursor-ring.big{ width:58px; height:58px; background:rgba(255,63,164,0.08); border-color:var(--magenta); }
+
+  #loader{ position:fixed; inset:0; z-index:1000; background:var(--bg); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; transition:opacity .8s ease, visibility .8s; }
+  #loader.hide{ opacity:0; visibility:hidden; }
+  .load-ring{ width:64px; height:64px; border-radius:50%; border:2px solid rgba(46,230,255,0.15); border-top-color:var(--cyan); border-right-color:var(--magenta); animation:rotate 1s linear infinite; }
+  @keyframes rotate{ to{ transform:rotate(360deg); } }
+  .load-text{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.3em; color:var(--text-dim); }
+
+  #progress{ position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg, var(--cyan), var(--magenta)); z-index:60; width:0%; box-shadow:0 0 8px var(--cyan); }
+
+  /* Backgrounds */
+  #fx-canvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .grid-floor{
+    position:fixed; left:0; right:0; bottom:0; height:52vh; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(46,230,255,0.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,230,255,0.14) 1px, transparent 1px);
+    background-size:52px 52px;
+    transform:perspective(500px) rotateX(72deg) scale(2.4);
+    transform-origin:bottom;
+    mask-image:linear-gradient(to top, black, transparent 85%);
+    -webkit-mask-image:linear-gradient(to top, black, transparent 85%);
+    opacity:0.5;
+  }
+  .vignette{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
     background:
-      radial-gradient(ellipse 60% 40% at 15% 0%, rgba(122,34,48,0.16), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 85% 10%, rgba(185,150,47,0.10), transparent 60%),
-      radial-gradient(ellipse 100% 60% at 50% 100%, rgba(20,26,40,0.9), transparent 70%),
-      var(--ink);
+      radial-gradient(ellipse 55% 40% at 12% 6%, rgba(255,63,164,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 45% at 90% 12%, rgba(139,92,246,0.12), transparent 60%),
+      radial-gradient(ellipse 120% 60% at 50% 100%, rgba(3,4,7,0.96), transparent 60%);
   }
-  .noise{
-    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.05; mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .scanlines{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.04;
+    background:repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px);
   }
-
   .wrap{ position:relative; z-index:2; }
 
-  /* Seal / eyebrow */
-  .seal{
-    display:inline-flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.18em;
-    text-transform:uppercase; color:var(--gold-bright);
-  }
-  .seal::before{
-    content:''; width:7px; height:7px; border-radius:50%;
-    background:var(--crimson-bright); box-shadow:0 0 8px var(--crimson-bright);
-  }
-
   /* Nav */
-  header{
-    position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(11,14,20,0.82); backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    max-width:1180px; margin:0 auto; padding:16px 28px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .brand{ font-family:'Cinzel',serif; font-weight:700; font-size:16px; letter-spacing:0.12em; }
-  .brand .dot{ color:var(--crimson-bright); }
-  .navlinks{ display:flex; gap:28px; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; }
-  .navlinks a{ text-decoration:none; color:var(--fog); position:relative; padding-bottom:4px; transition:color .25s; }
-  .navlinks a:hover{ color:var(--gold-bright); }
-  .navlinks a:focus-visible{ outline:1px solid var(--gold-bright); outline-offset:4px; }
+  header{ position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(5,7,12,0.72); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+  nav{ max-width:1200px; margin:0 auto; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Orbitron',sans-serif; font-weight:800; font-size:16px; letter-spacing:0.08em; }
+  .brand span{ color:var(--cyan); }
+  .navlinks{ display:flex; gap:30px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; }
+  .navlinks a{ text-decoration:none; color:var(--text-dim); position:relative; padding-bottom:6px; transition:color .25s; }
+  .navlinks a::before{ content:'//'; color:var(--magenta); opacity:0; margin-right:4px; transition:opacity .2s; }
+  .navlinks a:hover::before, .navlinks a.active::before{ opacity:1; }
+  .navlinks a:hover, .navlinks a.active{ color:var(--cyan); }
   @media (max-width:860px){ .navlinks{display:none;} }
+  .btn{ font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 22px; border-radius:2px; text-decoration:none; display:inline-flex; align-items:center; gap:10px; transition:transform .25s, box-shadow .25s, background .25s, color .25s; position:relative; }
+  .btn-primary{ background:linear-gradient(90deg, var(--cyan), var(--violet)); color:#05070c; font-weight:700; }
+  .btn-primary:hover{ box-shadow:0 0 28px rgba(46,230,255,0.45); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 18px rgba(46,230,255,0.2); }
+  .magnetic{ will-change:transform; }
 
-  section{ position:relative; padding:120px 28px; max-width:1180px; margin:0 auto; }
-  .divider{
-    height:1px; max-width:1180px; margin:0 auto;
-    background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
-  }
+  section{ position:relative; padding:130px 28px; max-width:1200px; margin:0 auto; }
+  .divider{ height:1px; max-width:1200px; margin:0 auto; background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent); }
+
+  [data-reveal]{ opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0ms); }
+  [data-reveal].in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } }
 
   /* HERO */
   .hero{ min-height:100vh; display:flex; align-items:center; padding-top:140px; }
-  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:70px; align-items:center; width:100%; }
-  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center; width:100%; }
+  @media (max-width:960px){ .hero-grid{ grid-template-columns:1fr; } }
+  .tag-line{ display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cyan); border:1px solid var(--line); padding:7px 14px; border-radius:20px; }
+  .tag-line::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 8px var(--lime); animation:blink 2s ease-in-out infinite; }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
-  .hero-title{ font-size:clamp(38px,5.4vw,68px); line-height:1.04; margin:18px 0 22px; }
-  .hero-title .accent{ color:var(--gold-bright); font-style:italic; font-family:'EB Garamond',serif; font-weight:400; }
-  .hero-sub{ font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--fog); letter-spacing:0.02em; margin-bottom:34px; max-width:520px; }
-
-  .btn{
-    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
-    padding:14px 26px; border-radius:2px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
-    transition:transform .2s, box-shadow .2s, background .2s;
+  .hero-title{ font-size:clamp(38px,5.6vw,66px); line-height:1.05; margin:22px 0 20px; font-weight:800; position:relative; }
+  .hero-title .glitch{ position:relative; display:inline-block; background:linear-gradient(90deg,var(--cyan),var(--magenta) 60%,var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-title .glitch::before, .hero-title .glitch::after{
+    content:attr(data-text); position:absolute; left:0; top:0; width:100%; overflow:hidden;
+    background:linear-gradient(90deg,var(--cyan),var(--magenta) 60%,var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent;
+    opacity:0.7;
   }
-  .btn-primary{ background:var(--gold); color:#161311; font-weight:700; }
-  .btn-primary:hover{ background:var(--gold-bright); box-shadow:0 0 24px rgba(185,150,47,0.35); transform:translateY(-2px); }
-  .btn-ghost{ border:1px solid var(--line); color:var(--parchment); }
-  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); transform:translateY(-2px); }
-  .btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
+  .hero-title .glitch::before{ animation:glitchTop 4.5s infinite linear; clip-path:inset(0 0 60% 0); transform:translate(-2px,-1px); }
+  .hero-title .glitch::after{ animation:glitchBot 5.5s infinite linear; clip-path:inset(60% 0 0 0); transform:translate(2px,1px); }
+  @keyframes glitchTop{ 0%,92%,100%{opacity:0; transform:translate(0,0);} 93%{opacity:.8; transform:translate(-3px,-1px);} 95%{opacity:.6; transform:translate(2px,1px);} 97%{opacity:0;} }
+  @keyframes glitchBot{ 0%,90%,100%{opacity:0; transform:translate(0,0);} 91%{opacity:.7; transform:translate(3px,1px);} 94%{opacity:.5; transform:translate(-2px,-1px);} 96%{opacity:0;} }
 
-  /* Compass / seal illustration */
-  .medallion{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
-  .medallion svg{ width:100%; height:100%; }
-  .m-ring{ animation: spin 60s linear infinite; transform-origin:200px 200px; }
-  .m-ring-rev{ animation: spin 46s linear infinite reverse; transform-origin:200px 200px; }
-  @keyframes spin{ to{ transform:rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce){ .m-ring, .m-ring-rev{ animation:none; } }
+  .hero-sub{ font-family:'JetBrains Mono',monospace; font-size:14.5px; color:var(--text-dim); margin-bottom:34px; max-width:520px; }
+  .hero-sub .k{ color:var(--lime); }
 
-  /* Eyebrow + section title pattern */
+  /* 3D core */
+  .core-wrap{ width:100%; aspect-ratio:1/1; max-width:420px; margin:0 auto; perspective:1000px; }
+  .core{ position:relative; width:100%; height:100%; transform-style:preserve-3d; animation:coreSpin 16s linear infinite; }
+  @keyframes coreSpin{ from{ transform:rotateY(0deg) rotateX(18deg);} to{ transform:rotateY(360deg) rotateX(18deg);} }
+  .ring3d{ position:absolute; inset:0; border:1px solid var(--cyan); border-radius:50%; box-shadow:0 0 24px rgba(46,230,255,0.25) inset; }
+  .ring3d.r2{ border-color:var(--magenta); transform:rotateX(70deg); box-shadow:0 0 24px rgba(255,63,164,0.25) inset; }
+  .ring3d.r3{ border-color:var(--violet); transform:rotateX(70deg) rotateY(60deg); box-shadow:0 0 24px rgba(139,92,246,0.25) inset; }
+  .ring3d.r4{ border-color:rgba(198,255,94,0.6); transform:rotateX(70deg) rotateY(120deg); }
+  .core-center{ position:absolute; inset:32%; border-radius:50%; background:radial-gradient(circle at 35% 30%, rgba(46,230,255,0.35), rgba(139,92,246,0.12) 60%, transparent 75%); display:flex; align-items:center; justify-content:center; font-family:'Orbitron',sans-serif; font-weight:900; font-size:13px; letter-spacing:0.15em; color:var(--text); text-shadow:0 0 12px var(--cyan); }
+  @media (prefers-reduced-motion: reduce){ .core{ animation:none; } }
+
   .sec-head{ margin-bottom:56px; }
-  .sec-num{ font-family:'JetBrains Mono',monospace; color:var(--crimson-bright); font-size:13px; letter-spacing:0.16em; }
-  .sec-title{ font-size:clamp(28px,3.4vw,42px); margin-top:10px; }
+  .sec-eyebrow{ font-family:'JetBrains Mono',monospace; color:var(--magenta); font-size:12.5px; letter-spacing:0.18em; display:flex; align-items:center; gap:10px; }
+  .sec-eyebrow::before{ content:''; width:26px; height:1px; background:var(--magenta); }
+  .sec-title{ font-size:clamp(28px,3.4vw,42px); margin-top:12px; font-weight:800; }
+  .sec-title .hl{ background:linear-gradient(90deg,var(--cyan),var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
 
   /* About */
-  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
-  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
-  .drop{ font-size:64px; float:left; line-height:0.8; padding:8px 10px 0 0; font-family:'Cinzel',serif; color:var(--gold-bright); }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; } }
+  .stat-row{ display:grid; grid-template-columns:1fr; gap:22px; margin-top:6px; }
+  .stat{ background:var(--panel); border:1px solid var(--line); padding:20px 22px; border-radius:6px; position:relative; overflow:hidden; }
+  .stat::after{ content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--cyan),var(--magenta)); }
+  .stat-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .stat-label{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-dim); letter-spacing:0.04em; }
+  .stat-val{ font-family:'Orbitron',sans-serif; color:var(--cyan); font-size:13px; }
+  .bar{ height:4px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; }
+  .bar-fill{ height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--magenta)); transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
 
-  .dial-row{ display:flex; flex-direction:column; gap:26px; margin-top:8px; }
-  .dial{ display:grid; grid-template-columns:1fr auto; gap:6px 14px; align-items:baseline; }
-  .dial-label{ font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.04em; color:var(--parchment-dim); }
-  .dial-seq{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-bright); }
-  .dial-track{ grid-column:1/-1; height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
-  .dial-fill{ height:100%; background:linear-gradient(90deg, var(--crimson), var(--gold)); width:0; transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
+  /* Tilt cards shared */
+  .tilt{ transform-style:preserve-3d; will-change:transform; transition:transform .15s ease-out, box-shadow .3s; }
 
-  /* Case files (experience) */
-  .case{
-    border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    padding:30px 32px; border-radius:3px; position:relative; margin-bottom:22px;
-  }
-  .case::before{
-    content:attr(data-file); position:absolute; top:-11px; left:26px; background:var(--ink);
-    padding:0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--gold-bright);
-  }
+  /* Experience */
+  .case{ background:var(--panel); border:1px solid var(--line); padding:28px 30px; border-radius:8px; margin-bottom:20px; position:relative; }
+  .case:hover{ border-color:var(--cyan); box-shadow:0 12px 40px -12px rgba(46,230,255,0.25); }
   .case-head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
-  .case-role{ font-family:'Cinzel',serif; font-size:20px; color:var(--parchment); }
-  .case-org{ color:var(--gold-bright); font-style:italic; }
-  .case-time{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--fog); white-space:nowrap; }
-  .case-body{ color:var(--parchment-dim); }
+  .case-role{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:20px; color:var(--text); }
+  .case-org{ color:var(--cyan); font-family:'JetBrains Mono',monospace; font-size:13px; }
+  .case-time{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim); white-space:nowrap; }
+  .case-body{ color:var(--text-dim); }
   .case-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
-  .tag{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; border:1px solid var(--line); color:var(--fog); padding:4px 10px; border-radius:20px; }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; border:1px solid var(--line); color:var(--text-dim); padding:4px 10px; border-radius:20px; }
+  .status{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; padding:3px 9px; border-radius:3px; }
+  .status.active{ color:var(--lime); border:1px solid rgba(198,255,94,0.4); }
+  .status.closed{ color:var(--text-dim); border:1px solid var(--line); }
 
-  /* Projects */
-  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-  @media (max-width:900px){ .cards{ grid-template-columns:1fr; } }
-  .pcard{ border:1px solid var(--line); padding:28px; background:var(--ink-2); position:relative; overflow:hidden; transition:border-color .25s, transform .25s; }
-  .pcard:hover{ border-color:var(--gold); transform:translateY(-4px); }
-  .pcard i{ color:var(--crimson-bright); font-size:22px; margin-bottom:16px; display:block; }
-  .pcard h3{ font-size:17px; margin:0 0 10px; }
-  .pcard p{ color:var(--parchment-dim); font-size:16px; margin:0; }
+  /* Portfolio / projects - main showcase */
+  .portfolio-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  @media (max-width:960px){ .portfolio-grid{ grid-template-columns:1fr; } }
+  .pcard{ position:relative; border-radius:10px; padding:1px; background:linear-gradient(145deg, rgba(46,230,255,0.35), rgba(255,63,164,0.15) 40%, rgba(255,255,255,0.04)); }
+  .pcard-inner{ background:var(--panel); border-radius:9px; padding:28px; height:100%; position:relative; overflow:hidden; }
+  .pcard-inner::before{ content:''; position:absolute; top:-40%; right:-40%; width:80%; height:80%; background:radial-gradient(circle, rgba(46,230,255,0.12), transparent 70%); pointer-events:none; }
+  .pcard-icon{ width:46px; height:46px; border-radius:8px; display:flex; align-items:center; justify-content:center; background:rgba(46,230,255,0.08); border:1px solid var(--line); margin-bottom:18px; color:var(--cyan); font-size:19px; }
+  .pcard h3{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:20px; margin-bottom:10px; }
+  .pcard p{ color:var(--text-dim); font-size:15.5px; margin:0 0 16px; }
+  .pcard .plink{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--magenta); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+  .pcard .plink i{ transition:transform .25s; }
+  .pcard:hover .plink i{ transform:translateX(4px); }
 
   /* Certifications */
   .certs{ display:flex; flex-direction:column; }
-  .cert{ display:flex; gap:20px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--line); }
+  .cert{ display:grid; grid-template-columns:60px 1fr; gap:20px; align-items:center; padding:20px 0; border-bottom:1px solid var(--line); transition:padding-left .3s; }
+  .cert:hover{ padding-left:8px; }
   .cert:last-child{ border-bottom:none; }
-  .cert .idx{ font-family:'JetBrains Mono',monospace; color:var(--gold-bright); font-size:13px; padding-top:4px; }
-  .cert h3{ font-size:18px; margin:0 0 6px; }
-  .cert p{ margin:0; color:var(--parchment-dim); }
+  .cert .idx{ font-family:'Orbitron',sans-serif; color:var(--violet); font-size:22px; text-align:center; }
+  .cert h3{ font-size:17px; margin:0 0 4px; font-weight:700; font-family:'Rajdhani',sans-serif; }
+  .cert p{ margin:0; color:var(--text-dim); font-size:15px; }
 
   /* Contact */
-  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .contact-panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:44px; position:relative; overflow:hidden; }
+  .contact-panel::before{ content:''; position:absolute; inset:0; background:linear-gradient(120deg, rgba(46,230,255,0.06), transparent 40%, rgba(255,63,164,0.06)); pointer-events:none; }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:50px; position:relative; }
   @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; } }
-  .clink{ display:flex; align-items:center; gap:14px; padding:16px 0; border-bottom:1px solid var(--line); text-decoration:none; }
-  .clink i{ color:var(--gold-bright); width:20px; }
-  .clink span{ color:var(--parchment-dim); }
-  .clink:hover span{ color:var(--parchment); }
+  .clink{ display:flex; align-items:center; gap:14px; padding:15px 0; border-bottom:1px solid var(--line); text-decoration:none; transition:padding-left .3s; }
+  .clink:hover{ padding-left:8px; }
+  .clink i{ color:var(--cyan); width:20px; transition:transform .3s; }
+  .clink:hover i{ transform:scale(1.2); color:var(--magenta); }
+  .clink span{ color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:14.5px; }
+  .clink:hover span{ color:var(--text); }
 
-  footer{ text-align:center; padding:40px 28px; color:var(--fog); font-family:'JetBrains Mono',monospace; font-size:12px; border-top:1px solid var(--line); }
+  footer{ text-align:center; padding:44px 28px; color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:11.5px; border-top:1px solid var(--line); letter-spacing:0.05em; }
 </style>
 </head>
 <body>
 
-<div class="fog-layer"></div>
-<div class="noise"></div>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<div id="loader"><div class="load-ring"></div><div class="load-text">A INICIALIZAR SISTEMA…</div></div>
+<div id="progress"></div>
+
+<canvas id="fx-canvas"></canvas>
+<div class="grid-floor"></div>
+<div class="vignette"></div>
+<div class="scanlines"></div>
 
 <header>
   <nav>
-    <div class="brand">N<span class="dot">·</span>SIMÃO</div>
+    <div class="brand">N<span>_</span>SIMÃO</div>
     <div class="navlinks">
-      <a href="#sobre">Dossiê</a>
-      <a href="#experiencia">Registos</a>
-      <a href="#projetos">Casos</a>
-      <a href="#certificacoes">Grimório</a>
+      <a href="#sobre">Perfil</a>
+      <a href="#experiencia">Log</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#certificacoes">Skills</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <a href="#contacto" class="btn btn-ghost" style="padding:10px 18px;">Contratar</a>
+    <a href="#contacto" class="btn btn-ghost magnetic" style="padding:10px 18px;">Contratar</a>
   </nav>
 </header>
 
@@ -209,34 +241,25 @@
   <section class="hero" id="topo">
     <div class="hero-grid">
       <div>
-        <div class="seal">Dossiê Nº 0447 · Sequência activa</div>
-        <h1 class="hero-title">Nelson Simão<br><span class="accent">caçador de anomalias digitais.</span></h1>
-        <p class="hero-sub">Analista de Cibersegurança sediado em Luanda, Angola. Vigio sistemas, sigo o rasto de vulnerabilidades e devolvo ordem ao caos — Blue Team por vocação, Bug Hunter por instinto.</p>
-        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-          <a href="#contacto" class="btn btn-primary"><i class="fa-solid fa-feather-pointed"></i> Abrir correspondência</a>
-          <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <div class="tag-line" data-reveal>SISTEMA ONLINE · LUANDA, ANGOLA</div>
+        <h1 class="hero-title" data-reveal style="--d:80ms;">
+          <span class="glitch" data-text="Nelson Simão">Nelson Simão</span><br>
+          <span style="-webkit-text-fill-color:var(--text); background:none;">Cybersecurity Analyst</span>
+        </h1>
+        <p class="hero-sub" data-reveal style="--d:160ms;"><span class="k">&gt;</span> monitorizo, caço vulnerabilidades e defendo sistemas.<br><span class="k">&gt;</span> Blue Team · Bug Bounty · SIEM · Pentest</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;" data-reveal style="--d:240ms;">
+          <a href="#portfolio" class="btn btn-primary magnetic"><i class="fa-solid fa-terminal"></i> Ver Portfólio</a>
+          <a href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank" class="btn btn-ghost magnetic"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
         </div>
       </div>
-      <div class="medallion" aria-hidden="true">
-        <svg viewBox="0 0 400 400">
-          <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(185,150,47,0.18)" stroke-width="1"/>
-          <g class="m-ring">
-            <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(185,150,47,0.35)" stroke-width="1" stroke-dasharray="2 8"/>
-            <g fill="var(--gold-bright)">
-              <circle cx="200" cy="40" r="2.4"/><circle cx="200" cy="360" r="2.4"/>
-              <circle cx="40" cy="200" r="2.4"/><circle cx="360" cy="200" r="2.4"/>
-            </g>
-          </g>
-          <g class="m-ring-rev">
-            <circle cx="200" cy="200" r="118" fill="none" stroke="rgba(122,34,48,0.5)" stroke-width="1"/>
-            <path d="M200 82 L212 200 L200 318 L188 200 Z" fill="none" stroke="rgba(122,34,48,0.55)" stroke-width="1"/>
-          </g>
-          <circle cx="200" cy="200" r="70" fill="none" stroke="var(--gold-bright)" stroke-width="1.4"/>
-          <text x="200" y="192" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="#e9e3d0" letter-spacing="2">BLUE</text>
-          <text x="200" y="216" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="#b9962f" letter-spacing="2">TEAM</text>
-          <line x1="200" y1="150" x2="200" y2="200" stroke="#e9e3d0" stroke-width="1.6" stroke-linecap="round"/>
-          <line x1="200" y1="200" x2="238" y2="200" stroke="#a13246" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
+      <div class="core-wrap" data-reveal style="--d:200ms;">
+        <div class="core">
+          <div class="ring3d"></div>
+          <div class="ring3d r2"></div>
+          <div class="ring3d r3"></div>
+          <div class="ring3d r4"></div>
+          <div class="core-center">SEC.EXE</div>
+        </div>
       </div>
     </div>
   </section>
@@ -245,37 +268,21 @@
 
   <!-- SOBRE -->
   <section id="sobre">
-    <div class="sec-head">
-      <div class="sec-num">FICHEIRO · 01</div>
-      <h2 class="sec-title">O Observador</h2>
+    <div class="sec-head" data-reveal>
+      <div class="sec-eyebrow">01 · PERFIL</div>
+      <h2 class="sec-title">O <span class="hl">Analista</span></h2>
     </div>
     <div class="about-grid">
-      <div>
-        <p><span class="drop">S</span>ou um profissional de TI com experiência prática em análise de vulnerabilidades e segurança da informação no mercado angolano. Identifiquei e reportei, de forma ética, falhas críticas em aplicações web e infra-estrutura para empresas como ZAP, Multitel e SmartOptions, e colaborei com a APD na investigação de um vazamento de dados.</p>
-        <p style="color:var(--parchment-dim);">Do lado defensivo, actuo como Blue Team Analyst: monitorizo alertas em SIEM (Wazuh), analiso registos, respondo a incidentes e reforço servidores Windows/Linux. Do lado ofensivo, participei em programas internacionais de Bug Bounty (HackerOne), caçando falhas de controlo de acesso, injecção e configuração insegura de APIs. A minha base em desenvolvimento web dá-me visão do ciclo de vida completo das aplicações — e dos riscos que ele esconde.</p>
+      <div data-reveal>
+        <p>Sou um profissional de TI com experiência prática em análise de vulnerabilidades e segurança da informação no mercado angolano. Identifiquei e reportei, de forma ética, falhas críticas em aplicações web e infra-estrutura para empresas como <strong style="color:var(--cyan);">ZAP</strong>, <strong style="color:var(--cyan);">Multitel</strong> e <strong style="color:var(--cyan);">SmartOptions</strong>, e colaborei com a APD na investigação de um vazamento de dados.</p>
+        <p style="color:var(--text-dim);">Do lado defensivo (Blue Team), monitorizo alertas em SIEM (Wazuh), analiso registos e respondo a incidentes. Do lado ofensivo, participo em programas internacionais de Bug Bounty (HackerOne), caçando falhas de controlo de acesso, injecção e configuração insegura de APIs.</p>
       </div>
-      <div>
-        <div class="dial-row">
-          <div class="dial">
-            <span class="dial-label">Segurança Ofensiva &amp; Pentest</span><span class="dial-seq">SEQ. 3</span>
-            <div class="dial-track"><div class="dial-fill" data-w="92%"></div></div>
-          </div>
-          <div class="dial">
-            <span class="dial-label">Monitorização &amp; SIEM (Wazuh)</span><span class="dial-seq">SEQ. 3</span>
-            <div class="dial-track"><div class="dial-fill" data-w="88%"></div></div>
-          </div>
-          <div class="dial">
-            <span class="dial-label">Resposta a Incidentes</span><span class="dial-seq">SEQ. 4</span>
-            <div class="dial-track"><div class="dial-fill" data-w="82%"></div></div>
-          </div>
-          <div class="dial">
-            <span class="dial-label">Hardening de Servidores</span><span class="dial-seq">SEQ. 4</span>
-            <div class="dial-track"><div class="dial-fill" data-w="85%"></div></div>
-          </div>
-          <div class="dial">
-            <span class="dial-label">Desenvolvimento Web Seguro</span><span class="dial-seq">SEQ. 5</span>
-            <div class="dial-track"><div class="dial-fill" data-w="75%"></div></div>
-          </div>
+      <div data-reveal style="--d:120ms;">
+        <div class="stat-row">
+          <div class="stat"><div class="stat-top"><span class="stat-label">Segurança Ofensiva &amp; Pentest</span><span class="stat-val">92%</span></div><div class="bar"><div class="bar-fill" data-w="92%"></div></div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-label">SIEM / Threat Hunting (Wazuh)</span><span class="stat-val">88%</span></div><div class="bar"><div class="bar-fill" data-w="88%"></div></div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-label">Resposta a Incidentes</span><span class="stat-val">82%</span></div><div class="bar"><div class="bar-fill" data-w="82%"></div></div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-label">Hardening de Servidores</span><span class="stat-val">85%</span></div><div class="bar"><div class="bar-fill" data-w="85%"></div></div></div>
         </div>
       </div>
     </div>
@@ -285,71 +292,104 @@
 
   <!-- EXPERIÊNCIA -->
   <section id="experiencia">
-    <div class="sec-head">
-      <div class="sec-num">FICHEIRO · 02</div>
-      <h2 class="sec-title">Registos de Campo</h2>
+    <div class="sec-head" data-reveal>
+      <div class="sec-eyebrow">02 · LOG DE ACTIVIDADE</div>
+      <h2 class="sec-title">Registo <span class="hl">Profissional</span></h2>
     </div>
 
-    <div class="case" data-file="CASO / ACTIVO">
+    <div class="case" data-reveal>
       <div class="case-head">
-        <div><span class="case-role">Blue Team Analyst</span> · <span class="case-org">Zonic Digital</span></div>
-        <div class="case-time">Abr 2024 — Presente · Luanda</div>
+        <div><span class="case-role">Blue Team Analyst</span> <span class="case-org">@ Zonic Digital</span></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="status active">ACTIVO</span><span class="case-time">Abr 2024 — Presente</span></div>
       </div>
-      <p class="case-body">Monitorização de alertas em SIEM (Wazuh), análise de registos e resposta inicial a incidentes. Identificação de padrões de ataque e documentação de manuais de resposta (playbooks).</p>
+      <p class="case-body">Monitorização de alertas em SIEM (Wazuh), análise de registos e resposta inicial a incidentes. Identificação de padrões de ataque e documentação de playbooks de segurança.</p>
       <div class="case-tags"><span class="tag">Wazuh</span><span class="tag">SIEM</span><span class="tag">Threat Hunting</span></div>
     </div>
 
-    <div class="case" data-file="CASO / ENCERRADO">
+    <div class="case" data-reveal style="--d:80ms;">
       <div class="case-head">
-        <div><span class="case-role">Especialista em Cibersegurança</span> · <span class="case-org">Create of Soft</span></div>
-        <div class="case-time">Maio 2023 — Maio 2025 · Luanda</div>
+        <div><span class="case-role">Especialista em Cibersegurança</span> <span class="case-org">@ Create of Soft</span></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="status closed">CONCLUÍDO</span><span class="case-time">Mai 2023 — Mai 2025</span></div>
       </div>
       <p class="case-body">Colaboração em controlos de acesso e hardening de endpoints. Elaboração de relatórios técnicos com planos de mitigação para as equipas de desenvolvimento.</p>
       <div class="case-tags"><span class="tag">Hardening</span><span class="tag">Windows/Linux</span></div>
     </div>
 
-    <div class="case" data-file="CASO / ENCERRADO">
+    <div class="case" data-reveal style="--d:160ms;">
       <div class="case-head">
-        <div><span class="case-role">Analista de Cibersegurança · Bug Bounty</span> · <span class="case-org">HackerOne</span></div>
-        <div class="case-time">Fev 2023 — Out 2024</div>
+        <div><span class="case-role">Analista de Cibersegurança · Bug Bounty</span> <span class="case-org">@ HackerOne</span></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="status closed">CONCLUÍDO</span><span class="case-time">Fev 2023 — Out 2024</span></div>
       </div>
-      <p class="case-body">Reporte ético de vulnerabilidades em programas internacionais com validação de correcções. Foco em falhas de controlo de acesso, injecção de código e configuração insegura de APIs.</p>
+      <p class="case-body">Reporte ético de vulnerabilidades em programas internacionais, com validação de correcções. Foco em falhas de controlo de acesso, injecção de código e configuração insegura de APIs.</p>
       <div class="case-tags"><span class="tag">IDOR</span><span class="tag">XSS</span><span class="tag">Bug Bounty</span></div>
     </div>
 
-    <div class="case" data-file="CASO / ENCERRADO">
+    <div class="case" data-reveal style="--d:240ms;">
       <div class="case-head">
-        <div><span class="case-role">Desenvolvedor Web</span> · <span class="case-org">Create of Soft</span></div>
-        <div class="case-time">Jan 2023 — Maio 2024 · Luanda</div>
+        <div><span class="case-role">Desenvolvedor Web</span> <span class="case-org">@ Create of Soft</span></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="status closed">CONCLUÍDO</span><span class="case-time">Jan 2023 — Mai 2024</span></div>
       </div>
-      <p class="case-body">Construção e manutenção de sistemas internos com foco em segurança por concepção (security by design). Sanitização de dados de entrada e prevenção contra SQLi, XSS e CSRF.</p>
-      <div class="case-tags"><span class="tag">OWASP Top 10</span><span class="tag">Segurança por Design</span></div>
+      <p class="case-body">Construção e manutenção de sistemas internos com foco em segurança por concepção. Sanitização de dados de entrada e prevenção contra SQLi, XSS e CSRF.</p>
+      <div class="case-tags"><span class="tag">OWASP Top 10</span><span class="tag">Security by Design</span></div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- PROJETOS -->
-  <section id="projetos">
-    <div class="sec-head">
-      <div class="sec-num">FICHEIRO · 03</div>
-      <h2 class="sec-title">Casos Notáveis</h2>
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="sec-head" data-reveal>
+      <div class="sec-eyebrow">03 · PORTFÓLIO</div>
+      <h2 class="sec-title">Projectos &amp; <span class="hl">Casos Reais</span></h2>
     </div>
-    <div class="cards">
-      <div class="pcard">
-        <i class="fa-solid fa-magnifying-glass-chart"></i>
-        <h3>Investigação de Vazamento — APD</h3>
-        <p>Investigação independente de vazamento de dados em parceria com a Associação para a Protecção de Dados, com foco na origem e no impacto da exposição.</p>
+    <div class="portfolio-grid">
+      <div class="pcard tilt" data-reveal>
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+          <h3>Investigação de Vazamento — APD</h3>
+          <p>Investigação independente em parceria com a Associação para a Protecção de Dados, com foco na origem e no impacto da exposição de dados pessoais.</p>
+          <span class="plink">DOSSIÊ CONCLUÍDO <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
       </div>
-      <div class="pcard">
-        <i class="fa-solid fa-bug"></i>
-        <h3>Reportes Éticos — ZAP, Multitel, SmartOptions</h3>
-        <p>Identificação e divulgação responsável de falhas críticas em aplicações web e infra-estrutura de empresas angolanas.</p>
+      <div class="pcard tilt" data-reveal style="--d:100ms;">
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-bug"></i></div>
+          <h3>Reportes Éticos — ZAP · Multitel · SmartOptions</h3>
+          <p>Identificação e divulgação responsável de falhas críticas em aplicações web e infra-estrutura de empresas angolanas.</p>
+          <span class="plink">3 EMPRESAS <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
       </div>
-      <div class="pcard">
-        <i class="fa-solid fa-shield-halved"></i>
-        <h3>Validações em Programas Internacionais</h3>
-        <p>Participação em programas de Bug Bounty via HackerOne, com falhas validadas e correcções acompanhadas até ao fecho.</p>
+      <div class="pcard tilt" data-reveal style="--d:200ms;">
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Bug Bounty — HackerOne</h3>
+          <p>Participação em programas internacionais de recompensa por vulnerabilidades, com falhas validadas e correcções acompanhadas até ao fecho.</p>
+          <span class="plink">PROGRAMA GLOBAL <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </div>
+      <div class="pcard tilt" data-reveal style="--d:80ms;">
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-server"></i></div>
+          <h3>Hardening de Infra-estrutura</h3>
+          <p>Reforço de servidores Windows Server e Linux, redução de superfície de ataque e aplicação de configurações seguras em ambientes de produção.</p>
+          <span class="plink">MULTI-CLIENTE <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </div>
+      <div class="pcard tilt" data-reveal style="--d:180ms;">
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+          <h3>Monitorização SOC — Wazuh</h3>
+          <p>Operação contínua de plataforma SIEM, triagem de alertas, análise de logs e resposta inicial a incidentes de segurança.</p>
+          <span class="plink">EM CURSO <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </div>
+      <div class="pcard tilt" data-reveal style="--d:260ms;">
+        <div class="pcard-inner">
+          <div class="pcard-icon"><i class="fa-solid fa-code"></i></div>
+          <h3>Aplicações Web Seguras</h3>
+          <p>Desenvolvimento com segurança por concepção — sanitização de entradas, prevenção de SQLi/XSS/CSRF desde a primeira linha de código.</p>
+          <span class="plink">OWASP TOP 10 <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
       </div>
     </div>
   </section>
@@ -358,27 +398,16 @@
 
   <!-- CERTIFICAÇÕES -->
   <section id="certificacoes">
-    <div class="sec-head">
-      <div class="sec-num">FICHEIRO · 04</div>
-      <h2 class="sec-title">O Grimório</h2>
+    <div class="sec-head" data-reveal>
+      <div class="sec-eyebrow">04 · SKILL TREE</div>
+      <h2 class="sec-title">Certificações &amp; <span class="hl">Formação</span></h2>
     </div>
     <div class="certs">
-      <div class="cert"><span class="idx">I.</span><div><h3>Wazuh for Security Engineers</h3><p>SIEM, XDR e Threat Hunting.</p></div></div>
-      <div class="cert"><span class="idx">II.</span><div><h3>Introdução à Análise de Vulnerabilidades</h3><p>Metodologias de segurança e exploração web.</p></div></div>
-      <div class="cert"><span class="idx">III.</span><div><h3>Cisco CCENT</h3><p>Fundamentos de redes e conectividade.</p></div></div>
-      <div class="cert"><span class="idx">IV.</span><div><h3>Pentest 2.0 / SOC Analyst</h3><p>Formação complementar contínua em testes de intrusão e operações de SOC.</p></div></div>
-    </div>
-
-    <div style="margin-top:56px;">
-      <div class="sec-num">FICHEIRO · 05</div>
-      <h2 class="sec-title" style="margin-bottom:18px;">Formação</h2>
-      <div class="case" data-file="EM CURSO">
-        <div class="case-head">
-          <div><span class="case-role">Engenharia Informática</span> · <span class="case-org">Instituto Superior Politécnico Internacional</span></div>
-          <div class="case-time">Prefinalista</div>
-        </div>
-        <p class="case-body">Ênfase em redes de computadores, segurança da informação e desenvolvimento de software.</p>
-      </div>
+      <div class="cert" data-reveal><span class="idx">01</span><div><h3>Wazuh for Security Engineers</h3><p>SIEM, XDR e Threat Hunting.</p></div></div>
+      <div class="cert" data-reveal style="--d:60ms;"><span class="idx">02</span><div><h3>Introdução à Análise de Vulnerabilidades</h3><p>Metodologias de segurança e exploração web.</p></div></div>
+      <div class="cert" data-reveal style="--d:120ms;"><span class="idx">03</span><div><h3>Cisco CCENT</h3><p>Fundamentos de redes e conectividade.</p></div></div>
+      <div class="cert" data-reveal style="--d:180ms;"><span class="idx">04</span><div><h3>Pentest 2.0 / SOC Analyst</h3><p>Formação complementar contínua em testes de intrusão e operações de SOC.</p></div></div>
+      <div class="cert" data-reveal style="--d:240ms;"><span class="idx">05</span><div><h3>Engenharia Informática — Prefinalista</h3><p>Instituto Superior Politécnico Internacional · ênfase em redes e segurança da informação.</p></div></div>
     </div>
   </section>
 
@@ -386,36 +415,119 @@
 
   <!-- CONTACTO -->
   <section id="contacto">
-    <div class="sec-head">
-      <div class="sec-num">FICHEIRO · 06</div>
-      <h2 class="sec-title">Abrir Correspondência</h2>
+    <div class="sec-head" data-reveal>
+      <div class="sec-eyebrow">05 · CONTACTO</div>
+      <h2 class="sec-title">Iniciar <span class="hl">Conexão</span></h2>
     </div>
-    <div class="contact-grid">
-      <div>
-        <p style="color:var(--parchment-dim); max-width:420px;">Disponível para oportunidades, consultorias ou colaborações em cibersegurança — protecção de dados, monitorização e resposta a incidentes.</p>
-      </div>
-      <div>
-        <a class="clink" href="mailto:nelsonsimao200@gmail.com"><i class="fa-solid fa-envelope"></i><span>nelsonsimao200@gmail.com</span></a>
-        <a class="clink" href="tel:+244928348146"><i class="fa-solid fa-phone"></i><span>+244 928 348 146</span></a>
-        <a class="clink" href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank"><i class="fa-brands fa-linkedin"></i><span>linkedin.com/in/nelson-simao-711a27231</span></a>
-        <a class="clink" href="#topo"><i class="fa-solid fa-location-dot"></i><span>Luanda, Angola</span></a>
+    <div class="contact-panel" data-reveal>
+      <div class="contact-grid">
+        <div>
+          <p style="color:var(--text-dim); max-width:420px; margin:0;">Disponível para oportunidades, consultorias ou colaborações em cibersegurança — protecção de dados, monitorização e resposta a incidentes.</p>
+        </div>
+        <div>
+          <a class="clink" href="mailto:nelsonsimao200@gmail.com"><i class="fa-solid fa-envelope"></i><span>nelsonsimao200@gmail.com</span></a>
+          <a class="clink" href="tel:+244928348146"><i class="fa-solid fa-phone"></i><span>+244 928 348 146</span></a>
+          <a class="clink" href="https://www.linkedin.com/in/nelson-simão-711a27231" target="_blank"><i class="fa-brands fa-linkedin"></i><span>linkedin.com/in/nelson-simao-711a27231</span></a>
+          <a class="clink" href="#topo"><i class="fa-solid fa-location-dot"></i><span>Luanda, Angola</span></a>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>DOSSIÊ ENCERRADO · N. SIMÃO © 2026 · TODOS OS DIREITOS RESERVADOS</footer>
+  <footer>N_SIMÃO.SYS © 2026 · TODOS OS DIREITOS RESERVADOS · CONEXÃO SEGURA</footer>
 </div>
 
 <script>
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.dial-fill').forEach(f=>{ f.style.width = f.dataset.w; });
-        io.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.3});
-  document.querySelectorAll('#sobre').forEach(el=>io.observe(el));
+window.addEventListener('load', ()=>{ setTimeout(()=> document.getElementById('loader').classList.add('hide'), 700); });
+
+// custom cursor
+const dot = document.querySelector('.cursor-dot');
+const ring = document.querySelector('.cursor-ring');
+let mx=0,my=0, rx=0, ry=0;
+window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+function loop(){ rx += (mx-rx)*0.16; ry += (my-ry)*0.16; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
+loop();
+document.querySelectorAll('a, button, .pcard, [tabindex]').forEach(el=>{
+  el.addEventListener('mouseenter', ()=> ring.classList.add('big'));
+  el.addEventListener('mouseleave', ()=> ring.classList.remove('big'));
+});
+
+// magnetic buttons
+document.querySelectorAll('.magnetic').forEach(btn=>{
+  btn.addEventListener('mousemove', e=>{
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
+    btn.style.transform = `translate(${x*0.25}px, ${y*0.35}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=>{ btn.style.transform='translate(0,0)'; });
+});
+
+// 3D tilt on portfolio cards
+document.querySelectorAll('.tilt').forEach(card=>{
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - 0.5;
+    const py = (e.clientY - r.top)/r.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${px*14}deg) rotateX(${-py*14}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', ()=>{ card.style.transform='perspective(700px) rotateY(0) rotateX(0) translateY(0)'; });
+});
+
+// scroll reveal
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar-fill').forEach(f=>{ f.style.width = f.dataset.w; });
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.15});
+document.querySelectorAll('[data-reveal]').forEach(el=> io.observe(el));
+
+// progress + active nav
+const progress = document.getElementById('progress');
+const navA = document.querySelectorAll('.navlinks a');
+const secs = [...document.querySelectorAll('section[id]')];
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight) * 100;
+  progress.style.width = pct + '%';
+  let current = secs[0].id;
+  secs.forEach(s=>{ if(window.scrollY >= s.offsetTop - 200) current = s.id; });
+  navA.forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+current));
+});
+
+// particle canvas - floating data motes
+const canvas = document.getElementById('fx-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+resize(); window.addEventListener('resize', resize);
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COUNT = reduced ? 0 : 60;
+const colors = ['46,230,255','255,63,164','139,92,246'];
+for(let i=0;i<COUNT;i++){
+  particles.push({
+    x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+    r: Math.random()*1.6+0.6, vx:(Math.random()-0.5)*0.25, vy:(Math.random()-0.5)*0.25,
+    c: colors[i%3], o: Math.random()*0.5+0.2
+  });
+}
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.x += p.vx; p.y += p.vy;
+    if(p.x < 0) p.x = innerWidth; if(p.x > innerWidth) p.x = 0;
+    if(p.y < 0) p.y = innerHeight; if(p.y > innerHeight) p.y = 0;
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(${p.c},${p.o})`;
+    ctx.shadowBlur = 6; ctx.shadowColor = `rgba(${p.c},0.8)`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 
 </body>
